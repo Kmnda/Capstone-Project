@@ -1,0 +1,44 @@
+# Terraform
+# Ignore Terraform state files, lock files, and local variables
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+terraform.tfvars
+crash.log
+
+# Ansible
+# Ignore Ansible temporary files and sensitive inventory
+.ansible/
+ansible/inventory
+
+# Python
+# Ignore virtual environments, byte code, and caches
+__pycache__/
+*.pyc
+venv/
+.venv/
+*.egg-info/
+
+# Node.js dependencies (for Newman)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE & Editor Directories
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+get_helm.sh
+
+# SSH Keys (if accidentally placed in project)
+*.pem
+*.pub

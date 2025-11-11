@@ -1,0 +1,25 @@
+- name: Initialize the Kubernetes cluster
+  shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+  args:
+    creates: /etc/kubernetes/admin.conf
+
+- name: Set up kubeconfig for ubuntu user
+  shell: |
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  args:
+    creates: $HOME/.kube/config
+
+- name: Install Flannel network CNI
+  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  args:
+    creates: /etc/kubernetes/flannel-applied
+
+- name: Get the join command
+  shell: kubeadm token create --print-join-command
+  register: join_command
+
+- name: Store the join command
+  set_fact:
+    join_command: "{{ join_command.stdout }}"
